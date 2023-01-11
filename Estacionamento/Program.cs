@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace Estacionamento.Main
+namespace Estacionamento
 {
     class Program
     {
@@ -37,6 +37,7 @@ namespace Estacionamento.Main
         menu:
             while (menu == true)
             {
+                removeVeiculo = null;
                 Console.Clear();
                 Console.WriteLine("------------------------------------");
                 Console.WriteLine("                Menu                ");
@@ -79,31 +80,39 @@ namespace Estacionamento.Main
                         }
                         Console.WriteLine("------------------------------------");
                         Console.Write("    Resposta: ");
-
                         removeVeiculo = Convert.ToString(Console.ReadLine());
-                        Placas.Remove(removeVeiculo);
 
-                        Console.Clear();
-                        Console.WriteLine("Aperte em qualquer botao para continuar");
-                        removeVeiculo = null;
-                        Console.Clear();
-                        Console.WriteLine("------------------------------------");
-                        Console.WriteLine("             Pagamento              ");
-                        Console.WriteLine("------------------------------------");
-                        Console.WriteLine("   Quantas horas o veiculo ficou ?  ");
-                        Console.WriteLine("------------------------------------");
-                        Console.Write("    Resposta: ");
-                        horasVeiculo = int.Parse(Console.ReadLine());
-                        Console.Clear();
-                        Console.WriteLine("------------------------------------");
-                        Console.WriteLine("             Pagamento              ");
-                        Console.WriteLine("------------------------------------");
-                        Console.WriteLine("     Veiculo removido com sucesso   ");
-                        Console.WriteLine($" e pagou R${(valorHora * horasVeiculo) + valorEntrada}. ");
-                        Console.WriteLine("------------------------------------");
+                        if (Placas.Any(x => x.ToUpper() == removeVeiculo.ToUpper()))
+                        {
+                            Console.Clear();
+                            Console.WriteLine("------------------------------------");
+                            Console.WriteLine("             Pagamento              ");
+                            Console.WriteLine("------------------------------------");
+                            Console.WriteLine("   Quantas horas o veiculo ficou ?  ");
+                            Console.WriteLine("------------------------------------");
+                            Console.Write("    Resposta: ");
+                            horasVeiculo = int.Parse(Console.ReadLine());
+                            Console.Clear();
+                            Console.WriteLine("------------------------------------");
+                            Console.WriteLine("             Pagamento              ");
+                            Console.WriteLine("------------------------------------");
+                            Console.WriteLine("     Veiculo removido com sucesso   ");
+                            Console.WriteLine($" e pagou R${(valorHora * horasVeiculo) + valorEntrada}. ");
+                            Console.WriteLine("------------------------------------");
+                            Placas.Remove(removeVeiculo);
+                            Console.ReadKey();
+                            goto menu;
 
-                        Console.ReadKey();
-                        goto menu;
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            Console.WriteLine($"O veiculo {removeVeiculo} não esta cadastrado.");
+                            Console.WriteLine("Aperte qualquer tecla para continuar");
+                            Console.ReadKey();
+                            goto menu;
+
+                        }
                         break;
                     case 3:
                         Console.Clear();
